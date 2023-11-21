@@ -28,4 +28,4 @@ runs:
         } | ConvertTo-Json  
           
         Invoke-RestMethod -Uri "https://dc.services.visualstudio.com/v2/track" -Method "POST" -Body $jsonBody -ContentType "application/json"
-      shell: pwsh
+      shell: powershell
