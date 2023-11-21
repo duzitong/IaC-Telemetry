@@ -4,6 +4,9 @@ inputs:
   event-name:
     description: "Name of the customEvent"
     required: true
+  directory:
+    description: "Directory to scan for IaC files"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -22,6 +25,7 @@ runs:
                         actor = "${{ github.actor }}"
                         repository = "${{ github.repository }}"
                         event_name = "${{ github.event_name }}"
+                        directory = "${{ inputs.directory }}"
                     }
                 }
             }
