@@ -11,25 +11,25 @@ runs:
   using: "composite"
   steps:
     - run: |
-        $jsonBody = @{
-            name = "EventData"
-            time = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ")
-            iKey = "b565e06f-9e18-4198-a62b-764a48d4e187"
-            data = @{
-                baseType = "EventData"
-                baseData = @{
-                    name = "${{ inputs.event-name }}"
-                    properties = @{
-                        workflow = "${{ github.workflow }}"
-                        run_number = "${{ github.run_number }}"
-                        actor = "${{ github.actor }}"
-                        repository = "${{ github.repository }}"
-                        event_name = "${{ github.event_name }}"
-                        directory = "${{ inputs.directory }}"
-                    }
-                }
+        curl https://dc.services.visualstudio.com/v2/track -d @- <<BODY
+        {
+          "name": "EventData",
+          "time": "$(date --utc +%FT%T.%3NZ)",
+          "iKey": "${{ inputs.instrumentation-key }}",
+          "data": {
+            "baseType": "EventData",
+            "baseData": {
+              "name": "${{ inputs.event-name }}",
+              "properties": {
+                "workflow": "${{ github.workflow }}",
+                "run_number": "${{ github.run_number }}",
+                "actor": "${{ github.actor }}",
+                "repository": "${{ github.repository }}",
+                "event_name": "${{ github.event_name }}"
+                "directory": "${{ inputs.directory }}"
+              }
             }
-        } | ConvertTo-Json -Depth 10
-        
-        Invoke-RestMethod -Uri "https://dc.services.visualstudio.com/v2/track" -Method "POST" -Body $jsonBody -ContentType "application/json"
-      shell: powershell
+          }
+        }
+        BODY
+      shell: bash
