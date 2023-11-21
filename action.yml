@@ -15,7 +15,7 @@ runs:
         {
           "name": "EventData",
           "time": "$(date --utc +%FT%T.%3NZ)",
-          "iKey": "${{ inputs.instrumentation-key }}",
+          "iKey": "b565e06f-9e18-4198-a62b-764a48d4e187",
           "data": {
             "baseType": "EventData",
             "baseData": {
