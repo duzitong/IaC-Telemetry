@@ -25,7 +25,7 @@ runs:
                 "run_number": "${{ github.run_number }}",
                 "actor": "${{ github.actor }}",
                 "repository": "${{ github.repository }}",
-                "event_name": "${{ github.event_name }}"
+                "event_name": "${{ github.event_name }}",
                 "directory": "${{ inputs.directory }}"
               }
             }
